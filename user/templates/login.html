@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Login</title>
+{% endblock title %}
+
+{% block content %}
+<h1>LOGİN</h1>
+
+<form method="POST" novalidate>
+    {% csrf_token %}
+
+    {% for field in form  %}
+
+    {% if field.errors %}
+    <div class="alert alert-danger w-50">
+        {{field.errors}}
+    </div>
+    {% endif %}
+    
+
+    <label for="field.id_for_label">{{field.label}}</label>
+    {{field}}
+    
+    {% endfor %}
+
+    <input class="btn btn-dark" type="submit" value="Giriş Yap">
+
+</form>
+
+
+{% endblock content %}

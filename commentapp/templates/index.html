@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    
+    <h1>Anasayfa</h1>
+   
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+
+                <div class="control-group form-group col-6">
+                    <div class="controls">
+                        <label>{{form.full_name.label}}</label>
+                        {{form.full_name}}
+                    </div>
+                </div>
+
+                <div class="control-group form-group col-6">
+                    <div class="controls">
+                        <label>{{form.email.label}}</label>
+                        {{form.email}}
+                    </div>
+                </div>
+
+                <div class="control-group form-group col-12">
+                    <div class="controls">
+                        <label>{{form.text.label}}</label>
+                        {{form.text}}
+                    </div>
+                    <input class="mt-3 btn btn-dark" type="submit" value="Gönder">
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+
+    <div class="container bg-light text-dark mt-5">
+        <h1>Yorumlar</h1>
+        {% for c in yorum %}
+            <div class="row">
+                <div class="col-12 mt-5">
+                    <h3>{{c.full_name}}</h3>
+                    <p>{{c.text}}</p>
+                    <p>{{c.user}}</p>
+                    
+                    {% if c.user == request.user %}
+                    <form action="{% url 'sil' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" value="{{c.id}}" name="sil" hidden>
+
+                        <p><button class=" btn btn-danger" type="submit">Sil</button></p>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% endblock content %}
